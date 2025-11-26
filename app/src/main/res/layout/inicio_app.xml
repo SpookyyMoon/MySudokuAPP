@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InicioAPP">
+
+    <LinearLayout
+        android:layout_width="306dp"
+        android:layout_height="203dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="508dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="139dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/botonNuevaPartida"
+            android:layout_width="301dp"
+            android:layout_height="67dp"
+            android:backgroundTint="#A377F6"
+            android:fontFamily="@font/poppins"
+            android:text="Nueva Partida"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            app:cornerRadius="5dp"
+            app:strokeColor="#7E40F3"
+            app:strokeWidth="1dp" />
+
+        <Button
+            android:id="@+id/botonPuntuaciones"
+            android:layout_width="301dp"
+            android:layout_height="67dp"
+            android:backgroundTint="#A377F6"
+            android:fontFamily="@font/poppins"
+            android:text="Puntuaciones"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            app:cornerRadius="5dp"
+            app:strokeColor="#7E40F3"
+            app:strokeWidth="1dp" />
+
+        <Button
+            android:id="@+id/botonSalir"
+            android:layout_width="301dp"
+            android:layout_height="67dp"
+            android:backgroundTint="#A377F6"
+            android:fontFamily="@font/poppins"
+            android:text="Salir"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            app:cornerRadius="5dp"
+            app:strokeColor="#7E40F3"
+            app:strokeWidth="1dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/logoAPP"
+        android:layout_width="329dp"
+        android:layout_height="387dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="89dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="375dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_sudoku" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
