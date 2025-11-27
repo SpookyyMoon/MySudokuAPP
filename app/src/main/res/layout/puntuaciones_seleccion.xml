@@ -2,8 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/puntuacionesSeleccion"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".PuntuacionesSeleccion">
 
     <ImageView
         android:id="@+id/logoMini"
@@ -79,6 +81,7 @@
         android:layout_marginBottom="260dp"
         android:backgroundTint="#A377F6"
         android:fontFamily="@font/poppins"
+        android:onClick="dificultadFacil"
         android:text="Facil"
         android:textAlignment="center"
         android:textSize="24sp"
@@ -100,6 +103,7 @@
         android:layout_marginBottom="87dp"
         android:backgroundTint="#A377F6"
         android:fontFamily="@font/poppins"
+        android:onClick="dificultadDificil"
         android:text="Dificil"
         android:textAlignment="center"
         android:textSize="24sp"
@@ -121,6 +125,7 @@
         android:layout_marginBottom="173dp"
         android:backgroundTint="#A377F6"
         android:fontFamily="@font/poppins"
+        android:onClick="dificultadMedia"
         android:text="Media"
         android:textAlignment="center"
         android:textSize="24sp"

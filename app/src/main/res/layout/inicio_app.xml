@@ -21,11 +21,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/botonNuevaPartida"
+            android:id="@+id/botonComprobar"
             android:layout_width="301dp"
             android:layout_height="67dp"
             android:backgroundTint="#A377F6"
             android:fontFamily="@font/poppins"
+            android:onClick="nuevaPartida"
             android:text="Nueva Partida"
             android:textAlignment="center"
             android:textSize="24sp"
@@ -34,11 +35,12 @@
             app:strokeWidth="1dp" />
 
         <Button
-            android:id="@+id/botonPuntuaciones"
+            android:id="@+id/botonPista"
             android:layout_width="301dp"
             android:layout_height="67dp"
             android:backgroundTint="#A377F6"
             android:fontFamily="@font/poppins"
+            android:onClick="puntuaciones"
             android:text="Puntuaciones"
             android:textAlignment="center"
             android:textSize="24sp"
@@ -47,11 +49,12 @@
             app:strokeWidth="1dp" />
 
         <Button
-            android:id="@+id/botonSalir"
+            android:id="@+id/botonRendirse"
             android:layout_width="301dp"
             android:layout_height="67dp"
             android:backgroundTint="#A377F6"
             android:fontFamily="@font/poppins"
+            android:onClick="salir"
             android:text="Salir"
             android:textAlignment="center"
             android:textSize="24sp"

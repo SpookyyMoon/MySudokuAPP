@@ -20,6 +20,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".NuevaPartidaNombre"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".NuevaPartidaDificultad"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".Partida"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".PuntuacionesSeleccion"
+            android:exported="true">
+        </activity>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

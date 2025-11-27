@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/partida"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Partida">
+
+    <ImageView
+        android:id="@+id/logoMini"
+        android:layout_width="230dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="81dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="82dp"
+        android:layout_marginBottom="715dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_texto" />
+
+    <LinearLayout
+        android:layout_width="306dp"
+        android:layout_height="203dp"
+        android:layout_marginTop="350dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:translationY="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/botonComprobar"
+            android:layout_width="301dp"
+            android:layout_height="67dp"
+            android:backgroundTint="#A377F6"
+            android:fontFamily="@font/poppins"
+            android:text="Comprobar"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            app:cornerRadius="5dp"
+            app:strokeColor="#7E40F3"
+            app:strokeWidth="1dp" />
+
+        <Button
+            android:id="@+id/botonPista"
+            android:layout_width="301dp"
+            android:layout_height="67dp"
+            android:backgroundTint="#A377F6"
+            android:fontFamily="@font/poppins"
+            android:text="Pista"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            app:cornerRadius="5dp"
+            app:strokeColor="#7E40F3"
+            app:strokeWidth="1dp" />
+
+        <Button
+            android:id="@+id/botonRendirse"
+            android:layout_width="301dp"
+            android:layout_height="67dp"
+            android:backgroundTint="#A377F6"
+            android:fontFamily="@font/poppins"
+            android:onClick="rendirse"
+            android:text="Rendirse"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            app:cornerRadius="5dp"
+            app:strokeColor="#7E40F3"
+            app:strokeWidth="1dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textoTiempo"
+        android:layout_width="93dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="171dp"
+        android:layout_marginEnd="279dp"
+        android:layout_marginBottom="644dp"
+        android:fontFamily="@font/poppins"
+        android:text="Tiempo:"
+        android:textAlignment="viewStart"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tiempoConteo"
+        android:layout_width="93dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="114dp"
+        android:layout_marginTop="171dp"
+        android:layout_marginEnd="186dp"
+        android:layout_marginBottom="644dp"
+        android:fontFamily="@font/poppins"
+        android:text="00:00"
+        android:textAlignment="center"
+        android:textColor="#7E40F3"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/tableroSudoku"
+        android:layout_width="327dp"
+        android:layout_height="320dp"
+        android:layout_marginBottom="80dp"
+        app:columnCount="9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rowCount="9" >
+
+    </androidx.gridlayout.widget.GridLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

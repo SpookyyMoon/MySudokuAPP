@@ -1,6 +1,8 @@
 package com.example.mysudokuapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,5 +22,19 @@ public class InicioAPP extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    public void nuevaPartida(View view) {
+        Intent intent = new Intent(this, NuevaPartidaNombre.class);
+        startActivity(intent);
+    }
+
+    public void puntuaciones(View view) {
+        Intent intent = new Intent(this, PuntuacionesSeleccion.class);
+        startActivity(intent);
+    }
+
+    public void salir(View view) {
+        System.exit(0);
     }
 }

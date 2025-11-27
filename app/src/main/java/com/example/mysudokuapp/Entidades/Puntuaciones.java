@@ -1,6 +1,8 @@
 package com.example.mysudokuapp.Entidades;
 
-public class Puntuaciones{
+import java.io.Serializable;
+
+public class Puntuaciones implements Serializable {
     String nombreUsuario;
     Number tiempoTardado;
     int pistasUsadas;
