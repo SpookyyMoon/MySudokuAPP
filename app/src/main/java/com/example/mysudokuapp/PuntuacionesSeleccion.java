@@ -18,6 +18,8 @@ public class PuntuacionesSeleccion extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.puntuaciones_seleccion);
 
+        botonAtras = findViewById(R.id.botonAtras); // Asignación de la imagen a botonAtras
+
         botonAtras.setOnClickListener(v -> { // Click listener que detecta los clicks sobre la imagen
             Intent intent = new Intent(this, InicioAPP.class);
             startActivity(intent);
@@ -26,22 +28,13 @@ public class PuntuacionesSeleccion extends AppCompatActivity {
 
     public void dificultadFacil(View view) {
         dificultad = "facil";
-        Intent intent = new Intent(this, Partida.class);
-        intent.putExtra("dificultadJuego", dificultad);
-        startActivity(intent); // Inicia la actividad pasando la dificultad
     }
 
     public void dificultadMedia(View view) {
         dificultad = "media";
-        Intent intent = new Intent(this, Partida.class);
-        intent.putExtra("dificultadJuego", dificultad);
-        startActivity(intent); // Inicia la actividad pasando la dificultad
     }
 
     public void dificultadDificil(View view) {
         dificultad = "dificil";
-        Intent intent = new Intent(this, Partida.class);
-        intent.putExtra("dificultadJuego", dificultad);
-        startActivity(intent); // Inicia la actividad pasando la dificultad
     }
 }
