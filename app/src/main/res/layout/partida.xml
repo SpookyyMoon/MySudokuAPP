@@ -78,9 +78,9 @@
         android:id="@+id/textoTiempo"
         android:layout_width="93dp"
         android:layout_height="36dp"
-        android:layout_marginStart="21dp"
+        android:layout_marginStart="33dp"
         android:layout_marginTop="171dp"
-        android:layout_marginEnd="279dp"
+        android:layout_marginEnd="267dp"
         android:layout_marginBottom="644dp"
         android:fontFamily="@font/poppins"
         android:text="Tiempo:"
@@ -95,9 +95,9 @@
         android:id="@+id/tiempoConteo"
         android:layout_width="93dp"
         android:layout_height="36dp"
-        android:layout_marginStart="114dp"
+        android:layout_marginStart="126dp"
         android:layout_marginTop="171dp"
-        android:layout_marginEnd="186dp"
+        android:layout_marginEnd="174dp"
         android:layout_marginBottom="644dp"
         android:fontFamily="@font/poppins"
         android:text="00:00"
@@ -119,7 +119,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:rowCount="9" >
+        app:rowCount="9">
 
     </androidx.gridlayout.widget.GridLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

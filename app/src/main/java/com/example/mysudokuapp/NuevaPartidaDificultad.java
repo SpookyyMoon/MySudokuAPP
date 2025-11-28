@@ -2,6 +2,7 @@ package com.example.mysudokuapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -27,6 +28,8 @@ public class NuevaPartidaDificultad extends AppCompatActivity {
             Intent intent = new Intent(this, NuevaPartidaNombre.class);
             startActivity(intent);
         });
+
+        Log.d("getIntent", "Nombre introducido -> " + nombreJugador);
     }
 
     public void dificultadFacil(View view) {

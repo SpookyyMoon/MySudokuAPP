@@ -2,6 +2,7 @@ package com.example.mysudokuapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import androidx.gridlayout.widget.GridLayout;
@@ -25,10 +26,22 @@ public class Partida extends AppCompatActivity {
         dificultad = intentPrevio.getStringExtra("dificultadJuego");
 
         tableroSudoku = findViewById(R.id.tableroSudoku); // Asigna el GridLayout a tableroSudoku
-        generarTablero(); // Ejecuta la función que genera el tablero
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                int[] celdaSeleccionada = (int[]) v.getTag();
+                int fila = celdaSeleccionada[0];
+                int columna = celdaSeleccionada[1];
+                Log.d("onClick", "Celda seleccionada -> " + "Fila: " + fila + " Columna: " + columna);
+            }
+        };
+        generarTablero(listener);
+
+        Log.d("getIntent", "Nombre introducido -> " + nombreJugador);
+        Log.d("getIntent", "Dificultad seleccionada -> " + dificultad);
     }
 
-    private void generarTablero() {
+    private void generarTablero(View.OnClickListener listener) {
         tableroSudoku.post(() -> { // Evita que las mediciones de alto y ancho se tomen antes de estar cargando la vista (Devolverian 0) fuerza a ejecutar el estado post (medicion) de Android Studio
             int anchoGrid = tableroSudoku.getWidth();
             int altoGrid = tableroSudoku.getHeight();
@@ -44,6 +57,10 @@ public class Partida extends AppCompatActivity {
                     celda.setGravity(Gravity.CENTER);
                     celda.setTextSize(16f);
                     celda.setBackground(ContextCompat.getDrawable(this, R.drawable.fondo_celdas_sudoku)); // Aplica el draweable (Diseño visual del tablero) a las celdas
+
+                    celda.setTag(new int[]{i, j}); // Tagea la celda con su correspondiente columna y fila (EJ: 0,0)
+
+                    celda.setOnClickListener(listener);
 
                     GridLayout.LayoutParams params = new GridLayout.LayoutParams(); // Estancia del objeto params de GridLayout
 
