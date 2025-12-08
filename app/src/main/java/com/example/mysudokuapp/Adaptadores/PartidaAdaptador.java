@@ -2,47 +2,59 @@ package com.example.mysudokuapp.Adaptadores;
 
 public class PartidaAdaptador {
 
-    public void recorrerTableroNumeros() {
+    private int[][] tablero = new int[9][9]; // Matriz de tablero
+
+    public boolean recorrerTableroNumeros() {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                int columnaSeleccionada = i;
-                int filaSeleccionada = j;
-                generarCasillaNumero(columnaSeleccionada, filaSeleccionada);
+                int filaSeleccionada = i;
+                int columnaSeleccionada = j;
+                if (tablero[filaSeleccionada][columnaSeleccionada] == 0) { //Comprieba que la celda este vacía
+                    for (int numeroProbar = 1; numeroProbar <= 9; numeroProbar++) { // Recorrer números del 1-9 para probarlos todos
+                        if (esPosibleAgregarNumero(filaSeleccionada, columnaSeleccionada, numeroProbar)) { // Comprueba que sea posible colocar ese número ahí
+                            tablero[filaSeleccionada][columnaSeleccionada] = numeroProbar;
+                            if (recorrerTableroNumeros()) { // Llamada recursiva a la siguiente celda
+                                return true; // Si no ha habido errores se continua
+                            }
+                            tablero[filaSeleccionada][columnaSeleccionada] = 0; // Backtracking en caso de fallo
+                        }
+                    }
+                    return false; // Si no se puede poner ningún numero en esa celda se retrocede a la anterior
+                }
             }
         }
+        return true; // Se detine el metodo cuando se han completado todas las celdas sin problemas
     }
-    public void generarCasillaNumero(int columnaSeleccionada, int filaSeleccionada) {
-        int numeroGenerado;
-        for (int i = 1; i < 10; i++) {
-            numeroGenerado = i;
-            if (esPosibleAgregarNumero(columnaSeleccionada, filaSeleccionada, numeroGenerado)) { // Llama a la función de comprobación
 
-            }
-            else{
-                generarCasillaNumero(columnaSeleccionada, filaSeleccionada);
+    public boolean esPosibleAgregarNumero(int filaSeleccionada, int columnaSeleccionada, int numeroProbar) {
+        // Comprobación de filas
+        for (int i = 0; i < 9; i++) {
+            if (tablero[filaSeleccionada][i] == numeroProbar){
+                return false;
             }
         }
+
+        // Comprobación de columnas
+        for (int i = 0; i < 9; i++) {
+            if (tablero[i][columnaSeleccionada] == numeroProbar){
+                return false;
+            }
+        }
+
+        // Comprobar bloques
+        int filaInicio = (filaSeleccionada / 3) * 3;
+        int columnaInicio = (columnaSeleccionada / 3) * 3;
+        for (int i = filaInicio; i < filaInicio + 3; i++) {
+            for (int j = columnaInicio; j < columnaInicio + 3; j++) {
+                if (tablero[i][j] == numeroProbar){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
-    public boolean esPosibleAgregarNumero(int columnaSeleccionada, int filaSeleccionada, int numeroGenerado) {
-        boolean disponible = false;
-        // Bucle nesteado que comprueba la disponibilidad de ese número dentro de ese sector
-        for (int i = columnaSeleccionada; i < i +3; i++) {
-            for (int j = filaSeleccionada; j < j+3; j++) {
-
-            }
-        }
-
-        // Comprobación de la disponibilidad de ese número dentro de ese sector
-        if (disponible) {
-            for (int i = 0; i < 9; i++) {
-
-            }
-            for (int j = 0; j < 9; j++) {
-
-            }
-        }
-
-        return disponible;
+    public int[][] getTablero() {
+        return tablero;
     }
 }

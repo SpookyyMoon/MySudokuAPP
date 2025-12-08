@@ -12,6 +12,8 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.mysudokuapp.Adaptadores.PartidaAdaptador;
+
 public class Partida extends AppCompatActivity {
 
     String nombreJugador, dificultad;
@@ -42,6 +44,8 @@ public class Partida extends AppCompatActivity {
     }
 
     private void generarTablero(View.OnClickListener listener) {
+        int[][] tableroNumeros = llenarTableroSudoku();
+
         tableroSudoku.post(() -> { // Evita que las mediciones de alto y ancho se tomen antes de estar cargando la vista (Devolverian 0) fuerza a ejecutar el estado post (medicion) de Android Studio
             int anchoGrid = tableroSudoku.getWidth();
             int altoGrid = tableroSudoku.getHeight();
@@ -62,6 +66,10 @@ public class Partida extends AppCompatActivity {
 
                     celda.setOnClickListener(listener);
 
+                    if (tableroNumeros[i][j] != 0) {
+                        celda.setText(String.valueOf(tableroNumeros[i][j]));
+                    }
+
                     GridLayout.LayoutParams params = new GridLayout.LayoutParams(); // Estancia del objeto params de GridLayout
 
                     int izquierda = 5, arriba = 3, derecha = 4, abajo = 2; // Márgenes preestablecidos (Izquierda > derecha para centrar contenido, Arriba > abajo para centrar contenido)
@@ -79,6 +87,21 @@ public class Partida extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private int[][] llenarTableroSudoku() {
+        PartidaAdaptador adaptador = new PartidaAdaptador();
+
+        adaptador.recorrerTableroNumeros();
+        int[][] tableroCompleto = adaptador.getTablero();
+
+        for (int k = 0; k < 45; k++) { // Se vacian 45 celdas aleatoriamente
+            int i = (int) (Math.random() * 9);
+            int j = (int) (Math.random() * 9);
+            tableroCompleto[i][j] = 0;
+        }
+
+        return tableroCompleto;
     }
 
     public void rendirse(View view) {
