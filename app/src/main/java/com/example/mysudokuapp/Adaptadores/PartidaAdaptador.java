@@ -12,12 +12,15 @@ public class PartidaAdaptador {
         }
     }
     public void generarCasillaNumero(int columnaSeleccionada, int filaSeleccionada) {
-        int numeroGenerado = (int) (Math.random() * 9 + 1);
-        if (esPosibleAgregarNumero(columnaSeleccionada, filaSeleccionada, numeroGenerado)) { // Llama a la función de comprobación
+        int numeroGenerado;
+        for (int i = 1; i < 10; i++) {
+            numeroGenerado = i;
+            if (esPosibleAgregarNumero(columnaSeleccionada, filaSeleccionada, numeroGenerado)) { // Llama a la función de comprobación
 
-        }
-        else{
-            generarCasillaNumero(columnaSeleccionada, filaSeleccionada);
+            }
+            else{
+                generarCasillaNumero(columnaSeleccionada, filaSeleccionada);
+            }
         }
     }
 

@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/botonComprobar"
+            android:id="@+id/botonNuevaPartida"
             android:layout_width="301dp"
             android:layout_height="67dp"
             android:backgroundTint="#A377F6"
@@ -36,7 +36,7 @@
             app:strokeWidth="1dp" />
 
         <Button
-            android:id="@+id/botonPista"
+            android:id="@+id/botonPuntuaciones"
             android:layout_width="301dp"
             android:layout_height="67dp"
             android:backgroundTint="#A377F6"
@@ -50,7 +50,7 @@
             app:strokeWidth="1dp" />
 
         <Button
-            android:id="@+id/botonRendirse"
+            android:id="@+id/botonSalir"
             android:layout_width="301dp"
             android:layout_height="67dp"
             android:backgroundTint="#A377F6"
