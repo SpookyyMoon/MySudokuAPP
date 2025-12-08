@@ -111,15 +111,123 @@
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/tableroSudoku"
-        android:layout_width="327dp"
-        android:layout_height="320dp"
+        android:layout_width="286dp"
+        android:layout_height="287dp"
         android:layout_marginBottom="80dp"
         app:columnCount="9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.452"
         app:rowCount="9">
 
     </androidx.gridlayout.widget.GridLayout>
+
+    <LinearLayout
+        android:layout_width="344dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="521dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="295dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/numeroUno"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/contenedor_numeros"
+            android:gravity="center"
+            android:text="1" />
+
+        <TextView
+            android:id="@+id/numeroDos"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/contenedor_numeros"
+            android:gravity="center"
+            android:text="2" />
+
+        <TextView
+            android:id="@+id/numeroTres"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/contenedor_numeros"
+            android:gravity="center"
+            android:text="3" />
+
+        <TextView
+            android:id="@+id/numeroCuatro"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/contenedor_numeros"
+            android:gravity="center"
+            android:text="4" />
+
+        <TextView
+            android:id="@+id/numeroCinco"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/contenedor_numeros"
+            android:gravity="center"
+            android:text="5" />
+
+        <TextView
+            android:id="@+id/numeroSeis"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/contenedor_numeros"
+            android:gravity="center"
+            android:text="6" />
+
+        <TextView
+            android:id="@+id/numeroSiete"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/contenedor_numeros"
+            android:gravity="center"
+            android:text="7" />
+
+        <TextView
+            android:id="@+id/numeroOcho"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/contenedor_numeros"
+            android:gravity="center"
+            android:text="8" />
+
+        <TextView
+            android:id="@+id/numeroNueve"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/contenedor_numeros"
+            android:gravity="center"
+            android:text="9" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

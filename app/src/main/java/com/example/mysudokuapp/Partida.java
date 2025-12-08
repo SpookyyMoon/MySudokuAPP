@@ -94,13 +94,19 @@ public class Partida extends AppCompatActivity {
 
         adaptador.recorrerTableroNumeros();
         int[][] tableroCompleto = adaptador.getTablero();
+        boolean[][] tableroVaciado = new boolean[9][9];
 
-        for (int k = 0; k < 45; k++) { // Se vacian 45 celdas aleatoriamente
+        int vaciadas = 0;
+        while (vaciadas < 45) { // Se vacian 45 celdas aleatorias
             int i = (int) (Math.random() * 9);
             int j = (int) (Math.random() * 9);
-            tableroCompleto[i][j] = 0;
-        }
 
+            if (!tableroVaciado[i][j]) {  // Se comprueba que no se haya vaciado ya esa celda para asegurar que una no se vacia varias veces
+                tableroCompleto[i][j] = 0;
+                tableroVaciado[i][j] = true;
+                vaciadas++;
+            }
+        }
         return tableroCompleto;
     }
 
