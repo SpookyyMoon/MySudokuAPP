@@ -1,6 +1,7 @@
 package com.example.mysudokuapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -14,10 +15,20 @@ import androidx.core.content.ContextCompat;
 
 import com.example.mysudokuapp.Adaptadores.PartidaAdaptador;
 
+import java.util.Objects;
+
 public class Partida extends AppCompatActivity {
 
     String nombreJugador, dificultad;
     GridLayout tableroSudoku;
+    TextView celdaSeleccionadaText;
+    int fila = -1;
+    int columna = -1;
+    int[] celdaSeleccionada;
+    int[][] tableroJuego;
+    int[][] tableroCompleto;
+
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +42,10 @@ public class Partida extends AppCompatActivity {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                int[] celdaSeleccionada = (int[]) v.getTag();
-                int fila = celdaSeleccionada[0];
-                int columna = celdaSeleccionada[1];
+                celdaSeleccionada = (int[]) v.getTag();
+                fila = celdaSeleccionada[0];
+                columna = celdaSeleccionada[1];
+                celdaSeleccionadaText = (TextView) v;
                 Log.d("onClick", "Celda seleccionada -> " + "Fila: " + fila + " Columna: " + columna);
             }
         };
@@ -89,25 +101,104 @@ public class Partida extends AppCompatActivity {
         });
     }
 
+    public boolean comprobarNumeroPosible(int fila, int columna) {
+        if (tableroCompleto[fila][columna] == tableroJuego[fila][columna]) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public void recibirPista(View v) {
+        if (celdaSeleccionadaText == null){
+            return;
+        }
+
+        if (celdaSeleccionadaText.getText() == "" || celdaSeleccionadaText.getText() == null && dificultad.equals("facil")) {
+            int valor = tableroCompleto[fila][columna];
+            celdaSeleccionadaText.setText(String.valueOf(valor));
+            tableroJuego[fila][columna] = valor;
+            celdaSeleccionadaText.setTextColor(Color.GREEN); // Si la celda está vacia y la dificultad es facil, se rellena la casilla y en color verde
+        }
+    }
+
+    public void pulsarNumero(View v) {
+        if (celdaSeleccionadaText == null){
+            return;
+        }
+
+        if (celdaSeleccionadaText.getText() == "" || celdaSeleccionadaText.getText() == null || dificultad.equals("facil") || dificultad.equals("media")) {
+            int valor = 0;
+            int id = v.getId();
+
+            if (id == R.id.numeroUno){
+                valor = 1;
+            }
+            else if (id == R.id.numeroDos){
+                valor = 2;
+            }
+            else if (id == R.id.numeroTres){
+                valor = 3;
+            }
+            else if (id == R.id.numeroCuatro){
+                valor = 4;
+            }
+            else if (id == R.id.numeroCinco){
+                valor = 5;
+            }
+            else if (id == R.id.numeroSeis){
+                valor = 6;
+            }
+            else if (id == R.id.numeroSiete){
+                valor = 7;
+            }
+            else if (id == R.id.numeroOcho){
+                valor = 8;
+            }
+            else if (id == R.id.numeroNueve){
+                valor = 9;
+            }
+
+            celdaSeleccionadaText.setText(String.valueOf(valor));
+            tableroJuego[fila][columna] = valor;
+            if (Objects.equals(dificultad, "facil") || Objects.equals(dificultad, "media")) { // Solo se aplica en caso de que la dificultad sea facil o media
+                if (!comprobarNumeroPosible(fila, columna)) {
+                    celdaSeleccionadaText.setTextColor(Color.RED); // En caso de que la solución no sea correcta se marca en rojo
+                }
+                else{
+                    celdaSeleccionadaText.setTextColor(Color.BLACK); // En caso de haber cambiado la celda, se restaura el color original
+                }
+            }
+        }
+    }
+
     private int[][] llenarTableroSudoku() {
         PartidaAdaptador adaptador = new PartidaAdaptador();
 
         adaptador.recorrerTableroNumeros();
-        int[][] tableroCompleto = adaptador.getTablero();
-        boolean[][] tableroVaciado = new boolean[9][9];
+        tableroCompleto = adaptador.getTablero(); // Guardado del tablero completo
+        tableroJuego = new int[9][9]; // Tablero vacio creado para el juego
 
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                tableroJuego[i][j] = tableroCompleto[i][j]; // Copiado de tablero con soluciones al tablero de juego vacío mediante un bucle
+            }
+        }
+
+        boolean[][] tableroVaciado = new boolean[9][9];
         int vaciadas = 0;
         while (vaciadas < 45) { // Se vacian 45 celdas aleatorias
             int i = (int) (Math.random() * 9);
             int j = (int) (Math.random() * 9);
 
             if (!tableroVaciado[i][j]) {  // Se comprueba que no se haya vaciado ya esa celda para asegurar que una no se vacia varias veces
-                tableroCompleto[i][j] = 0;
+                tableroJuego[i][j] = 0;
                 tableroVaciado[i][j] = true;
                 vaciadas++;
             }
         }
-        return tableroCompleto;
+        return tableroJuego;
     }
 
     public void rendirse(View view) {
