@@ -99,6 +99,7 @@ public class Partida extends AppCompatActivity {
                 }
             }
         });
+        Log.d("generarTablero", "Tablero generado correctamente!");
     }
 
     public boolean comprobarNumeroPosible(int fila, int columna) {
@@ -120,6 +121,7 @@ public class Partida extends AppCompatActivity {
             celdaSeleccionadaText.setText(String.valueOf(valor));
             tableroJuego[fila][columna] = valor;
             celdaSeleccionadaText.setTextColor(Color.GREEN); // Si la celda está vacia y la dificultad es facil, se rellena la casilla y en color verde
+            Log.d("recibirPista", "Pista recibida (Número: + " + valor + " en la celda -> Fila: " + fila + " Columna: " + columna);
         }
     }
 
@@ -162,6 +164,7 @@ public class Partida extends AppCompatActivity {
 
             celdaSeleccionadaText.setText(String.valueOf(valor));
             tableroJuego[fila][columna] = valor;
+            Log.d("pulsarNumero", "Número introducido -> " + valor + " en la celda -> Fila: " + fila + " Columna: " + columna);
             if (Objects.equals(dificultad, "facil") || Objects.equals(dificultad, "media")) { // Solo se aplica en caso de que la dificultad sea facil o media
                 if (!comprobarNumeroPosible(fila, columna)) {
                     celdaSeleccionadaText.setTextColor(Color.RED); // En caso de que la solución no sea correcta se marca en rojo
@@ -198,6 +201,7 @@ public class Partida extends AppCompatActivity {
                 vaciadas++;
             }
         }
+        Log.d("llenarTableroSudoku", "Tablero de juego listo!");
         return tableroJuego;
     }
 
