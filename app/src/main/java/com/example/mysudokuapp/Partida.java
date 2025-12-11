@@ -16,12 +16,17 @@ import androidx.core.content.ContextCompat;
 import com.example.mysudokuapp.Adaptadores.PartidaAdaptador;
 
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Partida extends AppCompatActivity {
 
     String nombreJugador, dificultad;
     GridLayout tableroSudoku;
-    TextView celdaSeleccionadaText;
+    TextView celdaSeleccionadaText, tiempoConteo;
+    Timer timer;
+    TimerTask timerTask;
+    Double tiempo = 0.0;
     int fila = -1;
     int columna = -1;
     int[] celdaSeleccionada;
@@ -38,6 +43,7 @@ public class Partida extends AppCompatActivity {
         nombreJugador = intentPrevio.getStringExtra("nombreJugador");
         dificultad = intentPrevio.getStringExtra("dificultadJuego");
 
+        tiempoConteo = findViewById(R.id.tiempoConteo);
         tableroSudoku = findViewById(R.id.tableroSudoku); // Asigna el GridLayout a tableroSudoku
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
@@ -50,9 +56,40 @@ public class Partida extends AppCompatActivity {
             }
         };
         generarTablero(listener);
+        iniciarContadorTiempo();
 
         Log.d("getIntent", "Nombre introducido -> " + nombreJugador);
         Log.d("getIntent", "Dificultad seleccionada -> " + dificultad);
+    }
+
+    private void iniciarContadorTiempo() {
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tiempo++;
+                        tiempoConteo.setText(getTiempoConteo());
+                    }
+                });
+            }
+
+            private String formatearTiempo(int segundos, int minutos) {
+                return String.format("%02d", minutos) + " : " + String.format("%02d", segundos);
+            }
+
+            private String getTiempoConteo() {
+                int tiempoRedondeado = (int) Math.round(tiempo);
+
+                int segundos = ((tiempoRedondeado % 86500) % 3600) % 60;
+                int minutos = ((tiempoRedondeado % 86500) % 3600) / 60;
+
+                return formatearTiempo(segundos, minutos);
+            }
+        };
+        timer.scheduleAtFixedRate(timerTask, 1000, 1000);
     }
 
     private void generarTablero(View.OnClickListener listener) {
@@ -102,6 +139,38 @@ public class Partida extends AppCompatActivity {
         Log.d("generarTablero", "Tablero generado correctamente!");
     }
 
+    public void comprobarVictoria(View v) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (tableroJuego[i][j] == 0) {
+                    Log.d("comprobarVictoria", "No se puede comprobar la victoria, el tablero no está completo");
+                    // Notificacion tablero no completo
+                }
+                else {
+                    if (tableroJuego == tableroCompleto) {
+                        if (dificultad.equals("facil")) {
+                            Log.d("comprobarVictoria", "El tablero se ha completado con éxito, el jugagdor " + nombreJugador + " lo ha terminado en Xs y usando X pistas");
+                        }
+                        else {
+                            Log.d("comprobarVictoria", "El tablero se ha completado con éxito, el jugagdor " + nombreJugador + " lo ha terminado en ");
+                        }
+                        timerTask.cancel();
+                        // Guardar datos
+                        // Notificación juego ganado (Dialog con opciones)
+                        // Cambio de actividad
+                    }
+                    else {
+                        Log.d("comprobarVictoria", "El tablero se ha completado erroneamente, el jugagdor " + nombreJugador + " lo ha terminado en Xs pero ha fallado.");
+                        timerTask.cancel();
+                        // Corregir errores (En rojo)
+                        // Notificación juego perdido (Dialog con opciones)
+                        // Cambio de actividad
+                    }
+                }
+            }
+        }
+    }
+
     public boolean comprobarNumeroPosible(int fila, int columna) {
         if (tableroCompleto[fila][columna] == tableroJuego[fila][columna]) {
             return true;
@@ -130,8 +199,7 @@ public class Partida extends AppCompatActivity {
             return;
         }
 
-        if (celdaSeleccionadaText.getText() == "" || celdaSeleccionadaText.getText() == null || dificultad.equals("facil") || dificultad.equals("media")) {
-            int valor = 0;
+        int valor = 0;
             int id = v.getId();
 
             if (id == R.id.numeroUno){
@@ -173,7 +241,6 @@ public class Partida extends AppCompatActivity {
                     celdaSeleccionadaText.setTextColor(Color.BLACK); // En caso de haber cambiado la celda, se restaura el color original
                 }
             }
-        }
     }
 
     private int[][] llenarTableroSudoku() {

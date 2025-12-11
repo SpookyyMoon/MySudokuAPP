@@ -54,7 +54,8 @@ public class PartidaAdaptador {
         return true;
     }
 
-    public int[][] getTablero() {
+    public int[][] getTablero()
+    {
         return tablero;
     }
 }
