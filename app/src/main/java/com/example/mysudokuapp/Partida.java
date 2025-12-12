@@ -1,12 +1,16 @@
 package com.example.mysudokuapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.gridlayout.widget.GridLayout;
+
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -33,8 +37,6 @@ public class Partida extends AppCompatActivity {
     int[][] tableroJuego;
     int[][] tableroCompleto;
 
-
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -47,7 +49,7 @@ public class Partida extends AppCompatActivity {
         tableroSudoku = findViewById(R.id.tableroSudoku); // Asigna el GridLayout a tableroSudoku
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 celdaSeleccionada = (int[]) v.getTag();
                 fila = celdaSeleccionada[0];
                 columna = celdaSeleccionada[1];
@@ -139,108 +141,249 @@ public class Partida extends AppCompatActivity {
         Log.d("generarTablero", "Tablero generado correctamente!");
     }
 
-    public void comprobarVictoria(View v) {
+    public void comprobarVictoriaBoton(View v) {
+
+        AlertDialog alertDialog = new AlertDialog.Builder(Partida.this).create();
+        alertDialog.setTitle("Comprobar tablero");
+        alertDialog.setIcon(R.drawable.logo_texto);
+        alertDialog.setMessage("¿Quieres comprobar el tablero? La partida terminará.");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Aceptar",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                        if (!tableroCompleto()) {
+                            alertaSencilla("Tablero incompleto", "Debes completar todas las casillas.");
+                            return;
+                        }
+
+                        if (tablerosIguales()) {
+                            alertaSencilla("¡Victoria!", "Has completado el Sudoku correctamente.");
+                            timer.cancel();
+                        } else {
+                            alertaSencilla("Incorrecto", "Hay errores en el tablero.");
+                            timer.cancel();
+                        }
+                    }
+
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancelar",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        alertDialog.show();
+    }
+
+    private void comprobarVictoriaDefinitiva() {
+        if (!tableroCompleto()) {
+            alertaSencilla("Tablero incompleto", "Debes completar todas las casillas.");
+            return;
+        }
+
+
+        if (tablerosIguales()) {
+            if (timer != null) {
+                timer.cancel();
+            }
+            alertaSencilla("¡Victoria!", "Has completado el Sudoku correctamente.");
+            // Guardar puntuación
+            // cambiar de actividad...
+        } else {
+            if (timer != null) {
+                timer.cancel();
+            }
+            alertaSencilla("Incorrecto", "El tablero contiene errores.");
+            // Marcar errores
+        }
+    }
+
+    private boolean tableroCompleto() {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                if (tableroJuego[i][j] == 0) {
-                    Log.d("comprobarVictoria", "No se puede comprobar la victoria, el tablero no está completo");
-                    // Notificacion tablero no completo
-                }
-                else {
-                    if (tableroJuego == tableroCompleto) {
-                        if (dificultad.equals("facil")) {
-                            Log.d("comprobarVictoria", "El tablero se ha completado con éxito, el jugagdor " + nombreJugador + " lo ha terminado en Xs y usando X pistas");
-                        }
-                        else {
-                            Log.d("comprobarVictoria", "El tablero se ha completado con éxito, el jugagdor " + nombreJugador + " lo ha terminado en ");
-                        }
-                        timerTask.cancel();
-                        // Guardar datos
-                        // Notificación juego ganado (Dialog con opciones)
-                        // Cambio de actividad
-                    }
-                    else {
-                        Log.d("comprobarVictoria", "El tablero se ha completado erroneamente, el jugagdor " + nombreJugador + " lo ha terminado en Xs pero ha fallado.");
-                        timerTask.cancel();
-                        // Corregir errores (En rojo)
-                        // Notificación juego perdido (Dialog con opciones)
-                        // Cambio de actividad
-                    }
+                if (tableroJuego[i][j] == 0) { // Recorre el tablero comprobando que las celdas no estén vacias
+                    return false;
                 }
             }
         }
+        return true;
+    }
+
+    private boolean tablerosIguales() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (tableroJuego[i][j] != tableroCompleto[i][j]) { // Recorre el tablero comparando cada casilla
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public boolean comprobarNumeroPosible(int fila, int columna) {
         if (tableroCompleto[fila][columna] == tableroJuego[fila][columna]) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
     public void recibirPista(View v) {
-        if (celdaSeleccionadaText == null){
+        if (celdaSeleccionadaText == null) {
             return;
         }
 
-        if (celdaSeleccionadaText.getText() == "" || celdaSeleccionadaText.getText() == null && dificultad.equals("facil")) {
-            int valor = tableroCompleto[fila][columna];
-            celdaSeleccionadaText.setText(String.valueOf(valor));
-            tableroJuego[fila][columna] = valor;
-            celdaSeleccionadaText.setTextColor(Color.GREEN); // Si la celda está vacia y la dificultad es facil, se rellena la casilla y en color verde
-            Log.d("recibirPista", "Pista recibida (Número: + " + valor + " en la celda -> Fila: " + fila + " Columna: " + columna);
+        if (celdaSeleccionadaText.getText().equals("") || celdaSeleccionadaText.getText() == null && dificultad.equals("facil")) {
+            alertaMostrar("pista");
+        } else if (celdaSeleccionadaText.getText().equals("") || celdaSeleccionadaText.getText() == null) {
+            alertaMostrar("pistaCeldaOcupada");
+        } else if (dificultad.equals("media") || dificultad.equals("dificil")) {
+            alertaMostrar("pistaDificultad");
         }
     }
 
+    public void alertaMostrar(String tipo) {
+
+        switch (tipo) {
+
+            case "comprobar":
+                alertaDoble(
+                        "Comprobar tablero",
+                        "¿Estás seguro de comprobar el tablero? La partida terminará.",
+                        () -> comprobarVictoriaDefinitiva()
+                );
+                break;
+
+            case "pista":
+                alertaDoble(
+                        "Recibir pista",
+                        "¿Quieres recibir una pista? Se tendrá en cuenta en la puntuación.",
+                        () -> aplicarPista()
+                );
+                break;
+
+            case "pistaDificultad":
+                alertaSencilla(
+                        "Recibir pista",
+                        "Las pistas solo están disponibles en dificultad fácil.\n" +
+                                "Estás jugando en dificultad: " + dificultad
+                );
+                break;
+
+            case "pistaCeldaOcupada":
+                alertaSencilla(
+                        "Celda ocupada",
+                        "No puedes recibir una pista en una celda que ya tiene un número."
+                );
+                break;
+
+            case "tableroNoCompleto":
+                alertaSencilla(
+                        "Tablero incompleto",
+                        "Debes completar todas las casillas antes de poder comprobar."
+                );
+                break;
+
+            case "rendirse":
+                alertaDoble(
+                        "Rendirse",
+                        "¿Seguro que quieres rendirte? Volverás al menú principal.",
+                        () -> {
+                            Intent intent = new Intent(this, InicioAPP.class);
+                            startActivity(intent);
+                        }
+                );
+                break;
+        }
+    }
+
+
+    public void alertaSencilla(String tituloAlerta, String mensajeAlerta) {
+        AlertDialog alertDialog = new AlertDialog.Builder(Partida.this).create();
+        alertDialog.setTitle(tituloAlerta);
+        alertDialog.setIcon(R.drawable.logo_texto);
+        alertDialog.setMessage(mensajeAlerta);
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Aceptar",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    public void alertaDoble(String titulo, String mensaje, Runnable accionAceptar) {
+        AlertDialog alertDialog = new AlertDialog.Builder(Partida.this).create();
+        alertDialog.setTitle(titulo);
+        alertDialog.setIcon(R.drawable.logo_texto);
+        alertDialog.setMessage(mensaje);
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Aceptar",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        accionAceptar.run();
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancelar",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    private void aplicarPista() {
+        if (tableroCompleto == null || celdaSeleccionadaText == null) return;
+        int valor = tableroCompleto[fila][columna];
+        celdaSeleccionadaText.setText(String.valueOf(valor));
+        celdaSeleccionadaText.setTextColor(Color.rgb(103, 200, 144));
+        tableroJuego[fila][columna] = valor;
+        Log.d("recibirPista", "Pista: " + valor + " en (" + fila + "," + columna + ")");
+    }
+
     public void pulsarNumero(View v) {
-        if (celdaSeleccionadaText == null){
+        if (celdaSeleccionadaText == null) {
             return;
         }
 
         int valor = 0;
-            int id = v.getId();
+        int id = v.getId();
 
-            if (id == R.id.numeroUno){
-                valor = 1;
-            }
-            else if (id == R.id.numeroDos){
-                valor = 2;
-            }
-            else if (id == R.id.numeroTres){
-                valor = 3;
-            }
-            else if (id == R.id.numeroCuatro){
-                valor = 4;
-            }
-            else if (id == R.id.numeroCinco){
-                valor = 5;
-            }
-            else if (id == R.id.numeroSeis){
-                valor = 6;
-            }
-            else if (id == R.id.numeroSiete){
-                valor = 7;
-            }
-            else if (id == R.id.numeroOcho){
-                valor = 8;
-            }
-            else if (id == R.id.numeroNueve){
-                valor = 9;
-            }
+        if (id == R.id.numeroUno) {
+            valor = 1;
+        } else if (id == R.id.numeroDos) {
+            valor = 2;
+        } else if (id == R.id.numeroTres) {
+            valor = 3;
+        } else if (id == R.id.numeroCuatro) {
+            valor = 4;
+        } else if (id == R.id.numeroCinco) {
+            valor = 5;
+        } else if (id == R.id.numeroSeis) {
+            valor = 6;
+        } else if (id == R.id.numeroSiete) {
+            valor = 7;
+        } else if (id == R.id.numeroOcho) {
+            valor = 8;
+        } else if (id == R.id.numeroNueve) {
+            valor = 9;
+        }
 
-            celdaSeleccionadaText.setText(String.valueOf(valor));
-            tableroJuego[fila][columna] = valor;
-            Log.d("pulsarNumero", "Número introducido -> " + valor + " en la celda -> Fila: " + fila + " Columna: " + columna);
-            if (Objects.equals(dificultad, "facil") || Objects.equals(dificultad, "media")) { // Solo se aplica en caso de que la dificultad sea facil o media
-                if (!comprobarNumeroPosible(fila, columna)) {
-                    celdaSeleccionadaText.setTextColor(Color.RED); // En caso de que la solución no sea correcta se marca en rojo
-                }
-                else{
-                    celdaSeleccionadaText.setTextColor(Color.BLACK); // En caso de haber cambiado la celda, se restaura el color original
-                }
+        celdaSeleccionadaText.setText(String.valueOf(valor));
+        tableroJuego[fila][columna] = valor;
+        Log.d("pulsarNumero", "Número introducido -> " + valor + " en la celda -> Fila: " + fila + " Columna: " + columna);
+        if (Objects.equals(dificultad, "facil") || Objects.equals(dificultad, "media")) { // Solo se aplica en caso de que la dificultad sea facil o media
+            if (!comprobarNumeroPosible(fila, columna)) {
+                celdaSeleccionadaText.setTextColor(Color.RED); // En caso de que la solución no sea correcta se marca en rojo
+            } else {
+                celdaSeleccionadaText.setTextColor(Color.rgb(126, 64, 243)); // En caso de haber cambiado la celda, se restaura el color original
             }
+        }
     }
 
     private int[][] llenarTableroSudoku() {
@@ -273,7 +416,6 @@ public class Partida extends AppCompatActivity {
     }
 
     public void rendirse(View view) {
-        Intent intent = new Intent(this, InicioAPP.class);
-        startActivity(intent);
+        alertaMostrar("rendirse");
     }
 }

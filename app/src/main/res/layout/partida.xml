@@ -39,7 +39,7 @@
             android:layout_height="67dp"
             android:backgroundTint="#A377F6"
             android:fontFamily="@font/poppins"
-            android:onClick="comprobarVictoria"
+            android:onClick="comprobarVictoriaBoton"
             android:text="Comprobar"
             android:textAlignment="center"
             android:textSize="24sp"
