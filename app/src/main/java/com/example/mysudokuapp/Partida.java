@@ -1,5 +1,7 @@
 package com.example.mysudokuapp;
 
+import static android.view.View.VISIBLE;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,22 +19,29 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.mysudokuapp.Adaptadores.ApiAdapter;
 import com.example.mysudokuapp.Adaptadores.PartidaAdaptador;
+import com.example.mysudokuapp.Entidades.Puntuaciones;
 
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class Partida extends AppCompatActivity {
 
     String nombreJugador, dificultad;
     GridLayout tableroSudoku;
-    TextView celdaSeleccionadaText, tiempoConteo;
+    TextView celdaSeleccionadaText, tiempoConteo, textoPistas, pistasConteo;
     Timer timer;
     TimerTask timerTask;
     Double tiempo = 0.0;
     int fila = -1;
     int columna = -1;
+    int contadorPistas = 0;
     int[] celdaSeleccionada;
     int[][] tableroJuego;
     int[][] tableroCompleto;
@@ -46,6 +55,14 @@ public class Partida extends AppCompatActivity {
         dificultad = intentPrevio.getStringExtra("dificultadJuego");
 
         tiempoConteo = findViewById(R.id.tiempoConteo);
+        textoPistas = findViewById(R.id.textoPistas);
+        pistasConteo = findViewById(R.id.pistasConteo);
+
+        if (dificultad.equals("facil")) {
+            textoPistas.setVisibility(VISIBLE);
+            pistasConteo.setVisibility(VISIBLE);
+        }
+
         tableroSudoku = findViewById(R.id.tableroSudoku); // Asigna el GridLayout a tableroSudoku
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
@@ -160,6 +177,22 @@ public class Partida extends AppCompatActivity {
                         if (tablerosIguales()) {
                             alertaSencilla("¡Victoria!", "Has completado el Sudoku correctamente.");
                             timer.cancel();
+
+                            Puntuaciones nuevaPuntuacion = new Puntuaciones(nombreJugador, tiempo, contadorPistas, dificultad);
+                            Call<Puntuaciones> call = ApiAdapter.getApiService().createPuntuacion(nuevaPuntuacion);
+                            call.enqueue(new Callback<Puntuaciones>() {
+                                @Override
+                                public void onResponse(Call<Puntuaciones> call, Response<Puntuaciones> response) {
+                                    Log.d("onResponse partida", "Puntuación guardada -> " + nuevaPuntuacion.getNombreUsuario());
+                                    Intent intent = new Intent(Partida.this, InicioAPP.class);
+                                    startActivity(intent);
+                                }
+
+                                @Override
+                                public void onFailure(Call<Puntuaciones> call, Throwable t) {
+                                    Log.e("onFailure partida", "Error al guardar puntuación", t);
+                                }
+                            });
                         } else {
                             alertaSencilla("Incorrecto", "Hay errores en el tablero.");
                             timer.cancel();
@@ -176,29 +209,6 @@ public class Partida extends AppCompatActivity {
                 });
 
         alertDialog.show();
-    }
-
-    private void comprobarVictoriaDefinitiva() {
-        if (!tableroCompleto()) {
-            alertaSencilla("Tablero incompleto", "Debes completar todas las casillas.");
-            return;
-        }
-
-
-        if (tablerosIguales()) {
-            if (timer != null) {
-                timer.cancel();
-            }
-            alertaSencilla("¡Victoria!", "Has completado el Sudoku correctamente.");
-            // Guardar puntuación
-            // cambiar de actividad...
-        } else {
-            if (timer != null) {
-                timer.cancel();
-            }
-            alertaSencilla("Incorrecto", "El tablero contiene errores.");
-            // Marcar errores
-        }
     }
 
     private boolean tableroCompleto() {
@@ -253,7 +263,7 @@ public class Partida extends AppCompatActivity {
                 alertaDoble(
                         "Comprobar tablero",
                         "¿Estás seguro de comprobar el tablero? La partida terminará.",
-                        () -> comprobarVictoriaDefinitiva()
+                        () ->  comprobarVictoriaBoton(null)
                 );
                 break;
 
@@ -338,12 +348,16 @@ public class Partida extends AppCompatActivity {
     }
 
     private void aplicarPista() {
-        if (tableroCompleto == null || celdaSeleccionadaText == null) return;
+        if (tableroCompleto == null || celdaSeleccionadaText == null) {
+            return;
+        }
         int valor = tableroCompleto[fila][columna];
         celdaSeleccionadaText.setText(String.valueOf(valor));
         celdaSeleccionadaText.setTextColor(Color.rgb(103, 200, 144));
         tableroJuego[fila][columna] = valor;
         Log.d("recibirPista", "Pista: " + valor + " en (" + fila + "," + columna + ")");
+        contadorPistas++;
+        pistasConteo.setText(String.valueOf(contadorPistas));
     }
 
     public void pulsarNumero(View v) {

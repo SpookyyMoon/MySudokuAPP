@@ -7,12 +7,12 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
 
 public interface ApiService {
-
+    @GET("puntuaciones")
+    Call<List<Puntuaciones>> getPuntuaciones();
+    @POST("puntuaciones")
+    Call<Puntuaciones> createPuntuacion(@Body Puntuaciones puntuaciones);
 }

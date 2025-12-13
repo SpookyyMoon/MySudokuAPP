@@ -94,6 +94,24 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/textoPistas"
+        android:layout_width="78dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="242dp"
+        android:layout_marginTop="171dp"
+        android:layout_marginEnd="73dp"
+        android:layout_marginBottom="644dp"
+        android:fontFamily="@font/poppins"
+        android:text="Pistas:"
+        android:textAlignment="viewStart"
+        android:textSize="22sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/tiempoConteo"
         android:layout_width="93dp"
         android:layout_height="36dp"
@@ -108,6 +126,28 @@
         android:textAlignment="viewStart"
         android:textColor="#7E40F3"
         android:textSize="22sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pistasConteo"
+        android:layout_width="26dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="320dp"
+        android:layout_marginTop="171dp"
+        android:layout_marginEnd="47dp"
+        android:layout_marginBottom="644dp"
+        android:fontFamily="@font/poppins"
+        android:paddingStart="5dp"
+        android:paddingTop="1dp"
+        android:text="0"
+        android:textAlignment="viewStart"
+        android:textColor="#7E40F3"
+        android:textSize="22sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
