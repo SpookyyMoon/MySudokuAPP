@@ -162,7 +162,7 @@ public class Partida extends AppCompatActivity {
 
         AlertDialog alertDialog = new AlertDialog.Builder(Partida.this).create();
         alertDialog.setTitle("Comprobar tablero");
-        alertDialog.setIcon(R.drawable.logo_texto);
+        alertDialog.setIcon(R.drawable.logo_alert);
         alertDialog.setMessage("¿Quieres comprobar el tablero? La partida terminará.");
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Aceptar",
                 new DialogInterface.OnClickListener() {
@@ -246,9 +246,9 @@ public class Partida extends AppCompatActivity {
             return;
         }
 
-        if (celdaSeleccionadaText.getText().equals("") || celdaSeleccionadaText.getText() == null && dificultad.equals("facil")) {
+        if (celdaSeleccionadaText.getText().equals("") && dificultad.equals("facil")) {
             alertaMostrar("pista");
-        } else if (celdaSeleccionadaText.getText().equals("") || celdaSeleccionadaText.getText() == null) {
+        } else if (!celdaSeleccionadaText.getText().equals("") || celdaSeleccionadaText.getText() == null) {
             alertaMostrar("pistaCeldaOcupada");
         } else if (dificultad.equals("media") || dificultad.equals("dificil")) {
             alertaMostrar("pistaDificultad");
@@ -314,7 +314,7 @@ public class Partida extends AppCompatActivity {
     public void alertaSencilla(String tituloAlerta, String mensajeAlerta) {
         AlertDialog alertDialog = new AlertDialog.Builder(Partida.this).create();
         alertDialog.setTitle(tituloAlerta);
-        alertDialog.setIcon(R.drawable.logo_texto);
+        alertDialog.setIcon(R.drawable.logo_alert);
         alertDialog.setMessage(mensajeAlerta);
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Aceptar",
                 new DialogInterface.OnClickListener() {
@@ -328,7 +328,7 @@ public class Partida extends AppCompatActivity {
     public void alertaDoble(String titulo, String mensaje, Runnable accionAceptar) {
         AlertDialog alertDialog = new AlertDialog.Builder(Partida.this).create();
         alertDialog.setTitle(titulo);
-        alertDialog.setIcon(R.drawable.logo_texto);
+        alertDialog.setIcon(R.drawable.logo_alert);
         alertDialog.setMessage(mensaje);
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Aceptar",
                 new DialogInterface.OnClickListener() {

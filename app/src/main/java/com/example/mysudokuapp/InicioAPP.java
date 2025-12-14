@@ -46,7 +46,7 @@ public class InicioAPP extends AppCompatActivity {
     public void alertaSencilla(String tituloAlerta, String mensajeAlerta) {
         AlertDialog alertDialog = new AlertDialog.Builder(InicioAPP.this).create();
         alertDialog.setTitle(tituloAlerta);
-        alertDialog.setIcon(R.drawable.logo_texto);
+        alertDialog.setIcon(R.drawable.logo_alert);
         alertDialog.setMessage(mensajeAlerta);
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Aceptar",
                 new DialogInterface.OnClickListener() {

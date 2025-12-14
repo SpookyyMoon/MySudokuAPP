@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class PuntuacionesSeleccion extends AppCompatActivity {
 
@@ -28,13 +29,22 @@ public class PuntuacionesSeleccion extends AppCompatActivity {
 
     public void dificultadFacil(View view) {
         dificultad = "facil";
+        Intent intent = new Intent(this, PuntuacionesVista.class);
+        intent.putExtra("dificultadJuego", dificultad);
+        startActivity(intent); // Inicia la actividad pasando la dificultad
     }
 
     public void dificultadMedia(View view) {
         dificultad = "media";
+        Intent intent = new Intent(this, PuntuacionesVista.class);
+        intent.putExtra("dificultadJuego", dificultad);
+        startActivity(intent); // Inicia la actividad pasando la dificultad
     }
 
     public void dificultadDificil(View view) {
         dificultad = "dificil";
+        Intent intent = new Intent(this, PuntuacionesVista.class);
+        intent.putExtra("dificultadJuego", dificultad);
+        startActivity(intent); // Inicia la actividad pasando la dificultad
     }
 }

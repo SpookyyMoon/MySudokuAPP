@@ -5,7 +5,74 @@
     android:id="@+id/puntuacionesSeleccion"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PuntuacionesSeleccion">
+    tools:context=".PuntuacionesSeleccion"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="-25dp">
+
+    <TextView
+        android:id="@+id/textoTiempoPuntuacion"
+        android:layout_width="83dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="155dp"
+        android:layout_marginTop="315dp"
+        android:layout_marginEnd="155dp"
+        android:layout_marginBottom="511dp"
+        android:fontFamily="@font/poppins"
+        android:text="Tiempo"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textoPistasPuntuacion"
+        android:layout_width="83dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="274dp"
+        android:layout_marginTop="315dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="511dp"
+        android:fontFamily="@font/poppins"
+        android:text="Pistas"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/separador"
+        android:layout_width="344dp"
+        android:layout_height="6dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="350dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="495dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/separador" />
+
+    <TextView
+        android:id="@+id/textoNombre"
+        android:layout_width="83dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="315dp"
+        android:layout_marginEnd="275dp"
+        android:layout_marginBottom="511dp"
+        android:fontFamily="@font/poppins"
+        android:text="Nombre"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/logoMini"
@@ -34,5 +101,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/boton_atras" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/contenedorPuntuaciones"
+        android:layout_width="327dp"
+        android:layout_height="425dp"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="382dp"
+        android:layout_marginEnd="33dp"
+        android:layout_marginBottom="44dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
