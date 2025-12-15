@@ -35,6 +35,9 @@ public class PuntuacionesVista extends AppCompatActivity implements Callback<Lis
         EdgeToEdge.enable(this);
         setContentView(R.layout.puntuaciones_vista);
 
+        Intent intentPrevio = getIntent();
+        dificultad = intentPrevio.getStringExtra("dificultadJuego");
+
         botonAtras = findViewById(R.id.botonAtras); // Asignación de la imagen a botonAtras
         contenedorPuntuaciones =  findViewById(R.id.contenedorPuntuaciones); // Asignacion del recycleview
 
@@ -43,7 +46,7 @@ public class PuntuacionesVista extends AppCompatActivity implements Callback<Lis
         contenedorPuntuaciones.setAdapter(adaptador);
 
 
-        Call<List<Puntuaciones>> call = ApiAdapter.getApiService().getPuntuaciones();
+        Call<List<Puntuaciones>> call = ApiAdapter.getApiService().getPuntuaciones(dificultad);
         call.enqueue(this);
 
         botonAtras.setOnClickListener(v -> { // Click listener que detecta los clicks sobre la imagen
